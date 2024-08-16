@@ -9,6 +9,7 @@ require (
 	google.golang.org/protobuf v1.34.2
 	gorm.io/driver/postgres v1.5.9
 	gorm.io/gorm v1.25.11
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240528184218-531527333157
 )
 
 require (
@@ -21,6 +22,5 @@ require (
 	golang.org/x/net v0.25.0 // indirect
 	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/sys v0.23.0 // indirect
-	golang.org/x/text v0.17.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240528184218-531527333157 // indirect
+	golang.org/x/text v0.17.0 // indirect // indirect
 )
