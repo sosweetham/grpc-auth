@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package grpc_ftp;
+
+option go_package = "server/pkg/pb";
+
+import "google/protobuf/timestamp.proto";
+
+message User {
+    string username = 1;
+    google.protobuf.Timestamp created_at = 2;
+}

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package grpc_ftp;
+
+import "user.proto";
+
+option go_package = "server/pkg/pb";
+
+message CreateUserRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message CreateUserResponse {
+    User user = 1;
+}

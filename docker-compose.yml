@@ -1,0 +1,43 @@
+services:
+  gftp-db:
+    container_name: gftp-db
+    image: postgres:16.4-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASS-password}
+      POSTGRES_USER: ${DB_USER-postgres}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER-postgres}"]
+      interval: 1s
+      timeout: 5s
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    ports:
+      - ${DB_BIND_PORT-5432}:5432
+  gftp-server:
+    container_name: gftp-server
+    build:
+      context: .
+      dockerfile: ./docker/dev/server.dockerfile
+    restart: unless-stopped
+    ports:
+      - ${PORT-3000}:${PORT-3000}
+    develop:
+      watch:
+        - action: sync
+          path: ./server
+          target: /app
+        - action: rebuild
+          path: ./server
+    depends_on:
+      - gftp-db
+    environment:
+      - HOST=${HOST}
+      - PORT=${PORT-3000}
+      - MODE=${MODE-dev}
+      - DB_HOST=${DB_HOST-gftp-db}
+      - DB_PORT=${DB_PORT-5432}
+      - DB_PASS=${DB_PASS-password}
+      - DB_USER=${DB_USER-postgres}
+      - DB_NAME=${DB_USER-postgres}
+      - DB_SSLMODE=${DB_SSLMODE-disable}
