@@ -35,6 +35,7 @@ services:
       - HOST=${HOST}
       - PORT=${PORT-3000}
       - MODE=${MODE-dev}
+      - PASS_SALT=${PASS_SALT-hotdogwater}
       - DB_HOST=${DB_HOST-gftp-db}
       - DB_PORT=${DB_PORT-5432}
       - DB_PASS=${DB_PASS-password}

@@ -9,4 +9,5 @@ import "google/protobuf/timestamp.proto";
 message User {
     string username = 1;
     google.protobuf.Timestamp created_at = 2;
+    google.protobuf.Timestamp updated_at = 3;
 }

@@ -20,6 +20,7 @@ func ValidateEnv() error {
 		"DB_USER",
 		"DB_NAME",
 		"DB_SSLMODE",
+		"PASS_SALT",
 	}
 	for _, currVar := range envVars {
 		setVar := os.Getenv(currVar)

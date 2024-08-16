@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package grpc_ftp;
+
+option go_package = "server/pkg/pb";
+
+message CheckPasswordRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message CheckPasswordResponse {
+    bool correct = 1;
+}

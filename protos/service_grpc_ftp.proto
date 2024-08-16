@@ -4,10 +4,12 @@ package grpc_ftp;
 
 import "rpc_create_user.proto";
 import "rpc_login_user.proto";
+import "rpc_check_pass.proto";
 
 option go_package = "server/pkg/pb";
 
 service GrpcFtp {
     rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
     rpc LoginUser (LoginUserRequest) returns (LoginUserResponse) {}
+    rpc CheckPassword (CheckPasswordRequest) returns (CheckPasswordResponse) {}
 }
