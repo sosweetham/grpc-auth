@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/sohamjaiswal/grpc-ftp/api/errors"
+	"github.com/sohamjaiswal/grpc-ftp/api/meta"
 	"github.com/sohamjaiswal/grpc-ftp/global"
 	"github.com/sohamjaiswal/grpc-ftp/models"
 	"github.com/sohamjaiswal/grpc-ftp/pkg/pb"
@@ -41,13 +42,13 @@ func LoginUser(ctx context.Context, req *pb.LoginUserRequest) (*pb.LoginUserResp
 	if err != nil {
 		return nil, errors.LoginUserTokenCreationError(err)
 	}
-	var dummy string = ""
+	mtdt := meta.ExtractMetadata(ctx)
 	session := &models.Session{
 		ID: refreshPayload.ID,
 		Username: user.Username,
 		RefreshToken: refreshToken,
-		UserAgent: &dummy,
-		ClientIp: &dummy,
+		UserAgent: &mtdt.UserAgent,
+		ClientIp: &mtdt.ClientIp,
 		ExpiresAt: refreshPayload.ExpiresAt,
 	}
 	if err = db.Create(&session).Error; err != nil {

@@ -18,3 +18,7 @@ func (s *server) CheckPassword(ctx context.Context, req *pb.CheckPasswordRequest
 func (s *server) LoginUser(ctx context.Context, req *pb.LoginUserRequest) (*pb.LoginUserResponse, error) {
 	return funcs.LoginUser(ctx, req)
 }
+
+func (s *server) Me(ctx context.Context, req *pb.NoParam) (*pb.MeResponse, error) {
+	return funcs.Me(ctx, req)
+}

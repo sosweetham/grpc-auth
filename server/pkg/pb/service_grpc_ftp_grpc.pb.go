@@ -22,6 +22,7 @@ const (
 	GrpcFtp_CreateUser_FullMethodName    = "/grpc_ftp.GrpcFtp/CreateUser"
 	GrpcFtp_LoginUser_FullMethodName     = "/grpc_ftp.GrpcFtp/LoginUser"
 	GrpcFtp_CheckPassword_FullMethodName = "/grpc_ftp.GrpcFtp/CheckPassword"
+	GrpcFtp_Me_FullMethodName            = "/grpc_ftp.GrpcFtp/Me"
 )
 
 // GrpcFtpClient is the client API for GrpcFtp service.
@@ -31,6 +32,7 @@ type GrpcFtpClient interface {
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	LoginUser(ctx context.Context, in *LoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error)
 	CheckPassword(ctx context.Context, in *CheckPasswordRequest, opts ...grpc.CallOption) (*CheckPasswordResponse, error)
+	Me(ctx context.Context, in *NoParam, opts ...grpc.CallOption) (*MeResponse, error)
 }
 
 type grpcFtpClient struct {
@@ -71,6 +73,16 @@ func (c *grpcFtpClient) CheckPassword(ctx context.Context, in *CheckPasswordRequ
 	return out, nil
 }
 
+func (c *grpcFtpClient) Me(ctx context.Context, in *NoParam, opts ...grpc.CallOption) (*MeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MeResponse)
+	err := c.cc.Invoke(ctx, GrpcFtp_Me_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GrpcFtpServer is the server API for GrpcFtp service.
 // All implementations must embed UnimplementedGrpcFtpServer
 // for forward compatibility
@@ -78,6 +90,7 @@ type GrpcFtpServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error)
 	CheckPassword(context.Context, *CheckPasswordRequest) (*CheckPasswordResponse, error)
+	Me(context.Context, *NoParam) (*MeResponse, error)
 	mustEmbedUnimplementedGrpcFtpServer()
 }
 
@@ -93,6 +106,9 @@ func (UnimplementedGrpcFtpServer) LoginUser(context.Context, *LoginUserRequest) 
 }
 func (UnimplementedGrpcFtpServer) CheckPassword(context.Context, *CheckPasswordRequest) (*CheckPasswordResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckPassword not implemented")
+}
+func (UnimplementedGrpcFtpServer) Me(context.Context, *NoParam) (*MeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Me not implemented")
 }
 func (UnimplementedGrpcFtpServer) mustEmbedUnimplementedGrpcFtpServer() {}
 
@@ -161,6 +177,24 @@ func _GrpcFtp_CheckPassword_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GrpcFtp_Me_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NoParam)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GrpcFtpServer).Me(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GrpcFtp_Me_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GrpcFtpServer).Me(ctx, req.(*NoParam))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GrpcFtp_ServiceDesc is the grpc.ServiceDesc for GrpcFtp service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -179,6 +213,10 @@ var GrpcFtp_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckPassword",
 			Handler:    _GrpcFtp_CheckPassword_Handler,
+		},
+		{
+			MethodName: "Me",
+			Handler:    _GrpcFtp_Me_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

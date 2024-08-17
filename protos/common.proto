@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package grpc_ftp;
+
+option go_package = "server/pkg/pb";
+
+message NoParam{}

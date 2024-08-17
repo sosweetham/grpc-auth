@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package grpc_ftp;
+
+import "user.proto";
+
+option go_package = "server/pkg/pb";
+
+message MeResponse {
+    User user = 1;
+}
