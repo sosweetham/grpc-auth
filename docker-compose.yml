@@ -11,7 +11,7 @@ services:
       interval: 1s
       timeout: 5s
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - ./db/data:/var/lib/postgresql/data
     ports:
       - ${DB_BIND_PORT-5432}:5432
   gftp-server:
