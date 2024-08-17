@@ -31,11 +31,11 @@ func RenewUserAccessToken(ctx context.Context, req *pb.RenewUserAccessTokenReque
 		return nil, errors.BlockedSession()
 	}
 
-	if session.Username != &refreshPayload.Username {
+	if *session.Username != refreshPayload.Username {
 		return nil, errors.IncorrectSessionUser()
 	}
 
-	if session.RefreshToken != &req.RefreshToken {
+	if *session.RefreshToken != req.RefreshToken {
 		return nil, errors.MismatchedSessionToken()
 	}
 

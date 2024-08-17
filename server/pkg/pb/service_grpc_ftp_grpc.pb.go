@@ -19,10 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	GrpcFtp_CreateUser_FullMethodName           = "/grpc_ftp.GrpcFtp/CreateUser"
-	GrpcFtp_LoginUser_FullMethodName            = "/grpc_ftp.GrpcFtp/LoginUser"
-	GrpcFtp_RenewUserAccessToken_FullMethodName = "/grpc_ftp.GrpcFtp/RenewUserAccessToken"
-	GrpcFtp_Me_FullMethodName                   = "/grpc_ftp.GrpcFtp/Me"
+	GrpcFtp_CreateUser_FullMethodName                  = "/grpc_ftp.GrpcFtp/CreateUser"
+	GrpcFtp_LoginUser_FullMethodName                   = "/grpc_ftp.GrpcFtp/LoginUser"
+	GrpcFtp_RenewUserAccessToken_FullMethodName        = "/grpc_ftp.GrpcFtp/RenewUserAccessToken"
+	GrpcFtp_UpdateUserRefreshTokenBlock_FullMethodName = "/grpc_ftp.GrpcFtp/UpdateUserRefreshTokenBlock"
+	GrpcFtp_ListSessions_FullMethodName                = "/grpc_ftp.GrpcFtp/ListSessions"
+	GrpcFtp_Me_FullMethodName                          = "/grpc_ftp.GrpcFtp/Me"
 )
 
 // GrpcFtpClient is the client API for GrpcFtp service.
@@ -32,7 +34,9 @@ type GrpcFtpClient interface {
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	LoginUser(ctx context.Context, in *LoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error)
 	RenewUserAccessToken(ctx context.Context, in *RenewUserAccessTokenRequest, opts ...grpc.CallOption) (*RenewUserAccessTokenResponse, error)
-	Me(ctx context.Context, in *NoParam, opts ...grpc.CallOption) (*MeResponse, error)
+	UpdateUserRefreshTokenBlock(ctx context.Context, in *UpdateUserRefreshTokenBlockRequest, opts ...grpc.CallOption) (*NoParams, error)
+	ListSessions(ctx context.Context, in *NoParams, opts ...grpc.CallOption) (*ListSessionsResponse, error)
+	Me(ctx context.Context, in *NoParams, opts ...grpc.CallOption) (*MeResponse, error)
 }
 
 type grpcFtpClient struct {
@@ -73,7 +77,27 @@ func (c *grpcFtpClient) RenewUserAccessToken(ctx context.Context, in *RenewUserA
 	return out, nil
 }
 
-func (c *grpcFtpClient) Me(ctx context.Context, in *NoParam, opts ...grpc.CallOption) (*MeResponse, error) {
+func (c *grpcFtpClient) UpdateUserRefreshTokenBlock(ctx context.Context, in *UpdateUserRefreshTokenBlockRequest, opts ...grpc.CallOption) (*NoParams, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(NoParams)
+	err := c.cc.Invoke(ctx, GrpcFtp_UpdateUserRefreshTokenBlock_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *grpcFtpClient) ListSessions(ctx context.Context, in *NoParams, opts ...grpc.CallOption) (*ListSessionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListSessionsResponse)
+	err := c.cc.Invoke(ctx, GrpcFtp_ListSessions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *grpcFtpClient) Me(ctx context.Context, in *NoParams, opts ...grpc.CallOption) (*MeResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(MeResponse)
 	err := c.cc.Invoke(ctx, GrpcFtp_Me_FullMethodName, in, out, cOpts...)
@@ -90,7 +114,9 @@ type GrpcFtpServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error)
 	RenewUserAccessToken(context.Context, *RenewUserAccessTokenRequest) (*RenewUserAccessTokenResponse, error)
-	Me(context.Context, *NoParam) (*MeResponse, error)
+	UpdateUserRefreshTokenBlock(context.Context, *UpdateUserRefreshTokenBlockRequest) (*NoParams, error)
+	ListSessions(context.Context, *NoParams) (*ListSessionsResponse, error)
+	Me(context.Context, *NoParams) (*MeResponse, error)
 	mustEmbedUnimplementedGrpcFtpServer()
 }
 
@@ -107,7 +133,13 @@ func (UnimplementedGrpcFtpServer) LoginUser(context.Context, *LoginUserRequest) 
 func (UnimplementedGrpcFtpServer) RenewUserAccessToken(context.Context, *RenewUserAccessTokenRequest) (*RenewUserAccessTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RenewUserAccessToken not implemented")
 }
-func (UnimplementedGrpcFtpServer) Me(context.Context, *NoParam) (*MeResponse, error) {
+func (UnimplementedGrpcFtpServer) UpdateUserRefreshTokenBlock(context.Context, *UpdateUserRefreshTokenBlockRequest) (*NoParams, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserRefreshTokenBlock not implemented")
+}
+func (UnimplementedGrpcFtpServer) ListSessions(context.Context, *NoParams) (*ListSessionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSessions not implemented")
+}
+func (UnimplementedGrpcFtpServer) Me(context.Context, *NoParams) (*MeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Me not implemented")
 }
 func (UnimplementedGrpcFtpServer) mustEmbedUnimplementedGrpcFtpServer() {}
@@ -177,8 +209,44 @@ func _GrpcFtp_RenewUserAccessToken_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GrpcFtp_UpdateUserRefreshTokenBlock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserRefreshTokenBlockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GrpcFtpServer).UpdateUserRefreshTokenBlock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GrpcFtp_UpdateUserRefreshTokenBlock_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GrpcFtpServer).UpdateUserRefreshTokenBlock(ctx, req.(*UpdateUserRefreshTokenBlockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GrpcFtp_ListSessions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NoParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GrpcFtpServer).ListSessions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GrpcFtp_ListSessions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GrpcFtpServer).ListSessions(ctx, req.(*NoParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _GrpcFtp_Me_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NoParam)
+	in := new(NoParams)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -190,7 +258,7 @@ func _GrpcFtp_Me_Handler(srv interface{}, ctx context.Context, dec func(interfac
 		FullMethod: GrpcFtp_Me_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GrpcFtpServer).Me(ctx, req.(*NoParam))
+		return srv.(GrpcFtpServer).Me(ctx, req.(*NoParams))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -213,6 +281,14 @@ var GrpcFtp_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RenewUserAccessToken",
 			Handler:    _GrpcFtp_RenewUserAccessToken_Handler,
+		},
+		{
+			MethodName: "UpdateUserRefreshTokenBlock",
+			Handler:    _GrpcFtp_UpdateUserRefreshTokenBlock_Handler,
+		},
+		{
+			MethodName: "ListSessions",
+			Handler:    _GrpcFtp_ListSessions_Handler,
 		},
 		{
 			MethodName: "Me",

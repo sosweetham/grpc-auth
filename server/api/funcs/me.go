@@ -11,7 +11,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func Me(ctx context.Context, req *pb.NoParam) (*pb.MeResponse, error) {
+func Me(ctx context.Context, req *pb.NoParams) (*pb.MeResponse, error) {
 	userAuth, err := meta.AuthorizeUser(ctx)
 	if err != nil {
 		return nil, err

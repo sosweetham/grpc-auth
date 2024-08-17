@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package grpc_ftp;
+
+option go_package = "server/pkg/pb";
+
+message UpdateUserRefreshTokenBlockRequest {
+    string refresh_token = 1;
+    bool block = 2;
+}

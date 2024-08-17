@@ -2,6 +2,15 @@ syntax = "proto3";
 
 package grpc_ftp;
 
+import "google/protobuf/timestamp.proto";
+
 option go_package = "server/pkg/pb";
 
-message NoParam{}
+message NoParams{}
+
+message Session {
+    string id = 1;
+    string user_agent = 2;
+    google.protobuf.Timestamp expires_at = 3;
+    bool is_blocked = 4;
+}
