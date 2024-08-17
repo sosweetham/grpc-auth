@@ -32,5 +32,8 @@ func main() {
 	if err := models.MigrateUser(db); err != nil {
 		log.Fatal("could not migrate user DB!")
 	}
+	if err := models.MigrateSession(db); err != nil {
+		log.Fatal("could not migrate session DB!")
+	}
 	api.Start()
 }

@@ -3,17 +3,19 @@ package models
 import (
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/sohamjaiswal/grpc-ftp/global"
 	"github.com/sohamjaiswal/grpc-ftp/tools"
 	"gorm.io/gorm"
 )
 
 type User struct {
-	ID string `gorm:"primary key; type:uuid; default:gen_random_uuid(); uniqueIndex" json:"id"`
+	ID uuid.UUID `gorm:"primary key; type:uuid; default:gen_random_uuid(); uniqueIndex" json:"id"`
 	Username *string `gorm:"type:varchar(40); not null; uniqueIndex" json:"username"`
 	Password *string `gorm:"size:255; not null" json:"password"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	Sessions []Session `gorm:"foreignKey:Username;references:Username"`
 }
 
 func MigrateUser(db *gorm.DB) error {
