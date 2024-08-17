@@ -19,10 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	GrpcFtp_CreateUser_FullMethodName    = "/grpc_ftp.GrpcFtp/CreateUser"
-	GrpcFtp_LoginUser_FullMethodName     = "/grpc_ftp.GrpcFtp/LoginUser"
-	GrpcFtp_CheckPassword_FullMethodName = "/grpc_ftp.GrpcFtp/CheckPassword"
-	GrpcFtp_Me_FullMethodName            = "/grpc_ftp.GrpcFtp/Me"
+	GrpcFtp_CreateUser_FullMethodName           = "/grpc_ftp.GrpcFtp/CreateUser"
+	GrpcFtp_LoginUser_FullMethodName            = "/grpc_ftp.GrpcFtp/LoginUser"
+	GrpcFtp_RenewUserAccessToken_FullMethodName = "/grpc_ftp.GrpcFtp/RenewUserAccessToken"
+	GrpcFtp_CheckPassword_FullMethodName        = "/grpc_ftp.GrpcFtp/CheckPassword"
+	GrpcFtp_Me_FullMethodName                   = "/grpc_ftp.GrpcFtp/Me"
 )
 
 // GrpcFtpClient is the client API for GrpcFtp service.
@@ -31,6 +32,7 @@ const (
 type GrpcFtpClient interface {
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	LoginUser(ctx context.Context, in *LoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error)
+	RenewUserAccessToken(ctx context.Context, in *RenewUserAccessTokenRequest, opts ...grpc.CallOption) (*RenewUserAccessTokenResponse, error)
 	CheckPassword(ctx context.Context, in *CheckPasswordRequest, opts ...grpc.CallOption) (*CheckPasswordResponse, error)
 	Me(ctx context.Context, in *NoParam, opts ...grpc.CallOption) (*MeResponse, error)
 }
@@ -63,6 +65,16 @@ func (c *grpcFtpClient) LoginUser(ctx context.Context, in *LoginUserRequest, opt
 	return out, nil
 }
 
+func (c *grpcFtpClient) RenewUserAccessToken(ctx context.Context, in *RenewUserAccessTokenRequest, opts ...grpc.CallOption) (*RenewUserAccessTokenResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RenewUserAccessTokenResponse)
+	err := c.cc.Invoke(ctx, GrpcFtp_RenewUserAccessToken_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *grpcFtpClient) CheckPassword(ctx context.Context, in *CheckPasswordRequest, opts ...grpc.CallOption) (*CheckPasswordResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CheckPasswordResponse)
@@ -89,6 +101,7 @@ func (c *grpcFtpClient) Me(ctx context.Context, in *NoParam, opts ...grpc.CallOp
 type GrpcFtpServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error)
+	RenewUserAccessToken(context.Context, *RenewUserAccessTokenRequest) (*RenewUserAccessTokenResponse, error)
 	CheckPassword(context.Context, *CheckPasswordRequest) (*CheckPasswordResponse, error)
 	Me(context.Context, *NoParam) (*MeResponse, error)
 	mustEmbedUnimplementedGrpcFtpServer()
@@ -103,6 +116,9 @@ func (UnimplementedGrpcFtpServer) CreateUser(context.Context, *CreateUserRequest
 }
 func (UnimplementedGrpcFtpServer) LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoginUser not implemented")
+}
+func (UnimplementedGrpcFtpServer) RenewUserAccessToken(context.Context, *RenewUserAccessTokenRequest) (*RenewUserAccessTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RenewUserAccessToken not implemented")
 }
 func (UnimplementedGrpcFtpServer) CheckPassword(context.Context, *CheckPasswordRequest) (*CheckPasswordResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckPassword not implemented")
@@ -159,6 +175,24 @@ func _GrpcFtp_LoginUser_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GrpcFtp_RenewUserAccessToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RenewUserAccessTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GrpcFtpServer).RenewUserAccessToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GrpcFtp_RenewUserAccessToken_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GrpcFtpServer).RenewUserAccessToken(ctx, req.(*RenewUserAccessTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _GrpcFtp_CheckPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CheckPasswordRequest)
 	if err := dec(in); err != nil {
@@ -209,6 +243,10 @@ var GrpcFtp_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LoginUser",
 			Handler:    _GrpcFtp_LoginUser_Handler,
+		},
+		{
+			MethodName: "RenewUserAccessToken",
+			Handler:    _GrpcFtp_RenewUserAccessToken_Handler,
 		},
 		{
 			MethodName: "CheckPassword",

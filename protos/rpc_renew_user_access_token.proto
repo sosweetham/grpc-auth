@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package grpc_ftp;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "server/pkg/pb";
+
+message RenewUserAccessTokenRequest {
+    string refresh_token = 1;
+}
+
+message RenewUserAccessTokenResponse {
+    string access_token = 1;
+    google.protobuf.Timestamp access_token_expires_at = 5;
+}

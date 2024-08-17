@@ -22,3 +22,7 @@ func (s *server) LoginUser(ctx context.Context, req *pb.LoginUserRequest) (*pb.L
 func (s *server) Me(ctx context.Context, req *pb.NoParam) (*pb.MeResponse, error) {
 	return funcs.Me(ctx, req)
 }
+
+func (s *server) RenewUserAccessToken(ctx context.Context, req *pb.RenewUserAccessTokenRequest) (*pb.RenewUserAccessTokenResponse, error) {
+	return funcs.RenewUserAccessToken(ctx, req)
+}
