@@ -11,10 +11,6 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-var (
-
-)
-
 func LoginUser(ctx context.Context, req *pb.LoginUserRequest) (*pb.LoginUserResponse, error) {
 	db, err := global.GetDBConn(false)
 	if err != nil {
