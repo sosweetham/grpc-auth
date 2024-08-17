@@ -11,10 +11,6 @@ func (s *server) CreateUser(ctx context.Context, req *pb.CreateUserRequest) (*pb
 	return funcs.CreateUser(ctx, req)
 }
 
-func (s *server) CheckPassword(ctx context.Context, req *pb.CheckPasswordRequest) (*pb.CheckPasswordResponse, error) {
-	return funcs.CheckPassword(ctx, req)
-}
-
 func (s *server) LoginUser(ctx context.Context, req *pb.LoginUserRequest) (*pb.LoginUserResponse, error) {
 	return funcs.LoginUser(ctx, req)
 }

@@ -4,7 +4,6 @@ package grpc_ftp;
 
 import "rpc_create_user.proto";
 import "rpc_login_user.proto";
-import "rpc_check_pass.proto";
 import "rpc_renew_user_access_token.proto";
 import "rpc_me.proto";
 import "common.proto";
@@ -15,6 +14,5 @@ service GrpcFtp {
     rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
     rpc LoginUser (LoginUserRequest) returns (LoginUserResponse) {}
     rpc RenewUserAccessToken (RenewUserAccessTokenRequest) returns (RenewUserAccessTokenResponse) {}
-    rpc CheckPassword (CheckPasswordRequest) returns (CheckPasswordResponse) {}
     rpc Me (NoParam) returns (MeResponse) {}
 }
