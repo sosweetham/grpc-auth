@@ -10,12 +10,12 @@ import (
 )
 
 type User struct {
-	ID uuid.UUID `gorm:"primary key; type:uuid; default:gen_random_uuid(); uniqueIndex" json:"id"`
-	Username *string `gorm:"type:varchar(40); not null; uniqueIndex" json:"username"`
-	Password *string `gorm:"size:255; not null" json:"password"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
-	Sessions []Session `gorm:"foreignKey:Username;references:Username"`
+	ID 			uuid.UUID 	`gorm:"primary key; type:uuid; default:gen_random_uuid(); uniqueIndex" json:"id"`
+	Username 	*string 	`gorm:"type:varchar(40); not null; uniqueIndex" json:"username"`
+	Password 	*string 	`gorm:"size:255; not null" json:"password"`
+	CreatedAt 	time.Time 	`json:"created_at"`
+	UpdatedAt 	time.Time 	`json:"updated_at"`
+	Sessions 	[]Session 	`gorm:"foreignKey:Username;references:Username"`
 }
 
 func MigrateUser(db *gorm.DB) error {
@@ -36,7 +36,7 @@ func (u *User) BeforeSave(tx *gorm.DB) (err error) {
 
 func (u *User) BeforeUpdate(tx *gorm.DB) (err error) {
 	existingUser := User{}
-	err = tx.Where("id = ?", u.ID).First(&existingUser).Error
+	err = tx.Where("ID = ?", u.ID).First(&existingUser).Error
 	if err != nil {
 		return err
 	}

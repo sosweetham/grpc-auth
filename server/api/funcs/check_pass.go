@@ -17,7 +17,7 @@ func CheckPassword(ctx context.Context, req *pb.CheckPasswordRequest) (*pb.Check
 	}
 	var checkingUser models.User
 	if err = db.Where("username = ?", req.Username).First(&checkingUser).Error; err != nil {
-		return nil, errors.CheckPassUserNotFound()
+		return nil, errors.UserNotFound()
 	}
 	comp, err := tools.ComparePasswordAndHash(req.Password, *checkingUser.Password)
 	if err != nil {
