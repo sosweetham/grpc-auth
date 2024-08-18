@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/o1egl/paseto"
-	"github.com/sohamjaiswal/grpc-ftp/pkg/payload"
+	"github.com/sohamjaiswal/grpc-auth/pkg/payload"
 )
 
 type Tokenizer struct {

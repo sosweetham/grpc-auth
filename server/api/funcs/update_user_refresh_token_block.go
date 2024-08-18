@@ -3,11 +3,11 @@ package funcs
 import (
 	"context"
 
-	"github.com/sohamjaiswal/grpc-ftp/api/errors"
-	"github.com/sohamjaiswal/grpc-ftp/api/meta"
-	"github.com/sohamjaiswal/grpc-ftp/global"
-	"github.com/sohamjaiswal/grpc-ftp/models"
-	"github.com/sohamjaiswal/grpc-ftp/pkg/pb"
+	"github.com/sohamjaiswal/grpc-auth/api/errors"
+	"github.com/sohamjaiswal/grpc-auth/api/meta"
+	"github.com/sohamjaiswal/grpc-auth/global"
+	"github.com/sohamjaiswal/grpc-auth/models"
+	"github.com/sohamjaiswal/grpc-auth/pkg/pb"
 )
 
 func UpdateUserRefreshTokenBlock(ctx context.Context, req *pb.UpdateUserRefreshTokenBlockRequest) (*pb.NoParams, error) {

@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 
-	"github.com/sohamjaiswal/grpc-ftp/pkg/pb"
+	"github.com/sohamjaiswal/grpc-auth/pkg/pb"
 )
 
 type server struct {

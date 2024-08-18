@@ -4,9 +4,9 @@ import (
 	"context"
 	"strings"
 
-	"github.com/sohamjaiswal/grpc-ftp/api/errors"
-	"github.com/sohamjaiswal/grpc-ftp/global"
-	"github.com/sohamjaiswal/grpc-ftp/pkg/payload"
+	"github.com/sohamjaiswal/grpc-auth/api/errors"
+	"github.com/sohamjaiswal/grpc-auth/global"
+	"github.com/sohamjaiswal/grpc-auth/pkg/payload"
 	"google.golang.org/grpc/metadata"
 )
 

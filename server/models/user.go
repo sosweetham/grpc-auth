@@ -4,8 +4,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/sohamjaiswal/grpc-ftp/global"
-	"github.com/sohamjaiswal/grpc-ftp/tools"
+	"github.com/sohamjaiswal/grpc-auth/global"
+	"github.com/sohamjaiswal/grpc-auth/tools"
 	"gorm.io/gorm"
 )
 

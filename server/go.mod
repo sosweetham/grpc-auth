@@ -1,4 +1,4 @@
-module github.com/sohamjaiswal/grpc-ftp
+module github.com/sohamjaiswal/grpc-auth
 
 go 1.22.5
 

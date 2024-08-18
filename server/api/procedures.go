@@ -3,8 +3,8 @@ package api
 import (
 	"context"
 
-	"github.com/sohamjaiswal/grpc-ftp/api/funcs"
-	"github.com/sohamjaiswal/grpc-ftp/pkg/pb"
+	"github.com/sohamjaiswal/grpc-auth/api/funcs"
+	"github.com/sohamjaiswal/grpc-auth/pkg/pb"
 )
 
 func (s *server) CreateUser(ctx context.Context, req *pb.CreateUserRequest) (*pb.CreateUserResponse, error) {

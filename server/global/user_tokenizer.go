@@ -8,7 +8,7 @@ import (
 
 	"github.com/aead/chacha20poly1305"
 	"github.com/o1egl/paseto"
-	"github.com/sohamjaiswal/grpc-ftp/tools"
+	"github.com/sohamjaiswal/grpc-auth/tools"
 )
 
 func checkUserTokenDurationsValidity() (time.Duration, time.Duration) {

@@ -6,10 +6,10 @@ import (
 	log "github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 
-	"github.com/sohamjaiswal/grpc-ftp/api"
-	"github.com/sohamjaiswal/grpc-ftp/global"
-	"github.com/sohamjaiswal/grpc-ftp/models"
-	"github.com/sohamjaiswal/grpc-ftp/tools"
+	"github.com/sohamjaiswal/grpc-auth/api"
+	"github.com/sohamjaiswal/grpc-auth/global"
+	"github.com/sohamjaiswal/grpc-auth/models"
+	"github.com/sohamjaiswal/grpc-auth/tools"
 )
 
 

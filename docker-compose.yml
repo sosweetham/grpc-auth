@@ -1,6 +1,6 @@
 services:
-  gftp-db:
-    container_name: gftp-db
+  gauth-db:
+    container_name: gauth-db
     image: postgres:16.4-alpine
     restart: unless-stopped
     environment:
@@ -14,8 +14,8 @@ services:
       - ./db/data:/var/lib/postgresql/data
     ports:
       - ${DB_BIND_PORT-5432}:5432
-  gftp-server:
-    container_name: gftp-server
+  gauth-server:
+    container_name: gauth-server
     build:
       context: .
       dockerfile: ./docker/dev/server.dockerfile
@@ -30,13 +30,13 @@ services:
         - action: rebuild
           path: ./server
     depends_on:
-      - gftp-db
+      - gauth-db
     environment:
       - HOST=${HOST}
       - PORT=${PORT-3000}
       - MODE=${MODE-dev}
       - PASS_SALT=${PASS_SALT-hotdogwater}
-      - DB_HOST=${DB_HOST-gftp-db}
+      - DB_HOST=${DB_HOST-gauth-db}
       - DB_PORT=${DB_PORT-5432}
       - DB_PASS=${DB_PASS-password}
       - DB_USER=${DB_USER-postgres}

@@ -3,7 +3,7 @@ package global
 import (
 	"os"
 
-	"github.com/sohamjaiswal/grpc-ftp/pkg/storage"
+	"github.com/sohamjaiswal/grpc-auth/pkg/storage"
 	"gorm.io/gorm"
 )
 

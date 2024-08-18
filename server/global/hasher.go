@@ -3,7 +3,7 @@ package global
 import (
 	"os"
 
-	"github.com/sohamjaiswal/grpc-ftp/tools"
+	"github.com/sohamjaiswal/grpc-auth/tools"
 )
 
 var DefaultHasher = &tools.Hasher{
